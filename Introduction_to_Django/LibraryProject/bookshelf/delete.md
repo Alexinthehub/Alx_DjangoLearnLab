@@ -1,12 +1,14 @@
-# delete.md
+from bookshelf.models import Book
 
-```python
-# Retrieve the book by title
+# Delete the book instance
+
 book = Book.objects.get(title="Nineteen Eighty-Four")
-
-# Delete the book
 book.delete()
 
-# Try retrieving all books to confirm deletion
+# Check that it's deleted
+
 Book.objects.all()
-```
+
+# Output:
+
+# <QuerySet []>
