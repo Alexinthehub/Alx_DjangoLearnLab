@@ -1,4 +1,5 @@
 from django.contrib import admin
+<<<<<<< HEAD
 from .models import Author, Book, Library, Librarian
 
 @admin.register(Author)
@@ -22,3 +23,7 @@ class LibraryAdmin(admin.ModelAdmin):
 class LibrarianAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "library")
     search_fields = ("name", "library__name")
+=======
+
+# Register your models here.
+>>>>>>> aea86264ebf01363a67a1d20dbc3f7bce3c4d97b
