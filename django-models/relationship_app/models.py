@@ -1,7 +1,4 @@
 from django.db import models
-
-<<<<<<< HEAD
-
 class Author(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
@@ -59,7 +56,6 @@ class Librarian(models.Model):
 
     def __str__(self) -> str:
         return f"{self.name} @ {self.library.name}"
-=======
 class Author(models.Model):
     name = models.CharField(max_length=100)
     bio = models.TextField(blank=True)
@@ -92,4 +88,3 @@ class Librarian(models.Model):
 from django.db import models
 
 # Create your models here.
->>>>>>> aea86264ebf01363a67a1d20dbc3f7bce3c4d97b
