@@ -1,20 +1,39 @@
-# query_samples.py
+import os
+import django
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "LibraryProject.settings")
+django.setup()
 
 from relationship_app.models import Author, Book, Library, Librarian
 
-# Sample Query 1: Create an Author
-author = Author.objects.create(name="Ngũgĩ wa Thiong'o")
+# ✅ Create sample authors
+author1 = Author.objects.create(name="Chinua Achebe", birthdate="1930-01-01")
+author2 = Author.objects.create(name="Ngũgĩ wa Thiong'o", birthdate="1938-01-05")
 
-# Sample Query 2: Create a Book and assign the author
-book = Book.objects.create(title="The River Between", author=author)
+# ✅ Create sample books
+book1 = Book.objects.create(title="Things Fall Apart", publication_year=1958, author=author1)
+book2 = Book.objects.create(title="The River Between", publication_year=1965, author=author2)
 
-# Sample Query 3: Create a Library and add the book
-library = Library.objects.create(name="Kenya National Library")
-library.books.add(book)
+# ✅ Create a library and add books to it
+library = Library.objects.create(name="National Library")
+library.books.set([book1, book2])  # Many-to-Many relationship
 
-# Sample Query 4: Create a Librarian assigned to the Library
+# ✅ Assign a librarian to the library
 librarian = Librarian.objects.create(name="Jane Doe", library=library)
 
-# Retrieve all books in the library
-books_in_library = library.books.all()
-print("Books in library:", books_in_library)
+# ✅ Print all books with their authors
+print("\nBooks and their authors:")
+for book in Book.objects.all():
+    print(f"{book.title} ({book.publication_year}) by {book.author.name}")
+
+# ✅ Print all libraries and their books
+print("\nLibraries and their books:")
+for lib in Library.objects.all():
+    print(f"Library: {lib.name}")
+    for book in lib.books.all():
+        print(f" - {book.title} by {book.author.name}")
+
+# ✅ Print librarian and their library
+print("\nLibrarians and their libraries:")
+for librarian in Librarian.objects.all():
+    print(f"{librarian.name} works at {librarian.library.name}")
