@@ -1,32 +1,48 @@
-# query_samples.py
 from relationship_app.models import Author, Book, Library, Librarian
 from datetime import date
 
-# Create an Author
-author = Author.objects.create(name="Chinua Achebe", birth_date=date(1930, 11, 16))
+# Clear previous entries (optional during development)
+Author.objects.all().delete()
+Book.objects.all().delete()
+Library.objects.all().delete()
+Librarian.objects.all().delete()
 
-# Create a Book linked to the Author
-book = Book.objects.create(title="Things Fall Apart", publication_date=date(1958, 6, 17), author=author)
+# Create authors
+author1 = Author.objects.create(name="George Orwell", birth_date=date(1903, 6, 25))
+author2 = Author.objects.create(name="Jane Austen", birth_date=date(1775, 12, 16))
 
-# Create a Library and add the Book
-library = Library.objects.create(name="Central Library")
-library.books.add(book)
+# Create books and assign authors
+book1 = Book.objects.create(title="1984", publication_year=1949)
+book1.authors.set([author1])
 
-# Create a Librarian assigned to the Library
-librarian = Librarian.objects.create(name="Jane Doe", library=library)
+book2 = Book.objects.create(title="Pride and Prejudice", publication_year=1813)
+book2.authors.set([author2])
 
-# Sample Queries
-# Retrieve all books by an author
-author_books = Book.objects.filter(author=author)
+book3 = Book.objects.create(title="Multi-Author Book", publication_year=2000)
+book3.authors.set([author1, author2])  # Multiple authors
 
-# Retrieve all books in a library
-library_books = library.books.all()
+# Create a library
+library = Library.objects.create(name="Central Library", location="Downtown")
 
-# Retrieve the librarian managing a library
-library_librarian = Librarian.objects.get(library=library)
+# Add books to library
+library.books.add(book1, book2, book3)
 
-# Print some output
-print("Author:", author.name)
-print("Books by author:", [b.title for b in author_books])
-print("Books in library:", [b.title for b in library_books])
-print("Librarian:", library_librarian.name)
+# Create a librarian assigned to the library
+librarian = Librarian.objects.create(name="Alex Mwendwa", employee_id="EMP001", library=library)
+
+# Verify entries
+print("Authors:")
+for author in Author.objects.all():
+    print(f"- {author.name} ({author.birth_date})")
+
+print("\nBooks and their authors:")
+for book in Book.objects.all():
+    author_names = ', '.join([a.name for a in book.authors.all()])
+    print(f"- {book.title} ({book.publication_year}) by {author_names}")
+
+print("\nLibrary and its books:")
+print(f"{library.name} at {library.location}")
+for book in library.books.all():
+    print(f"  - {book.title}")
+
+print(f"\nLibrarian: {librarian.name} (ID: {librarian.employee_id}) manages {librarian.library.name}")
