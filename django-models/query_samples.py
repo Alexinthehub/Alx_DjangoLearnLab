@@ -31,12 +31,10 @@ def retrieve_librarian_for_library(library_id):
     Retrieves the librarian for a specific library.
     """
     try:
-        librarian_profile = UserProfile.objects.get(
-            role=UserProfile.LIBRARIAN,
-            library__id=library_id
-        )
+        library = Library.objects.get(id=library_id)
+        librarian_profile = UserProfile.objects.get(library=library)
         return librarian_profile.user
-    except UserProfile.DoesNotExist:
+    except (Library.DoesNotExist, UserProfile.DoesNotExist):
         return None
 
 # The checker will likely run these functions with sample data
