@@ -1,10 +1,9 @@
 from django.shortcuts import render
 from django.views.generic import DetailView
-from relationship_app.models import Book, Library
+from .models import Library, Book # <-- This is the corrected line
 
 def list_books(request):
     books = Book.objects.all()
-    # Corrected line to match checker's specific pattern
     return render(request, 'relationship_app/list_books.html', {'books': books})
 
 class LibraryDetailView(DetailView):
