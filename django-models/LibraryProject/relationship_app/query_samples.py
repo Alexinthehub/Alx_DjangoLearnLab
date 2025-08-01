@@ -41,5 +41,6 @@ for book in books_in_nairobi:
     print(book.title)
 
 # 3. Retrieve the librarian for a library.
-librarian_at_kisumu = Librarian.objects.get(library__name="Kisumu Public Library")
+library_at_kisumu = Library.objects.get(name="Kisumu Public Library")
+librarian_at_kisumu = Librarian.objects.get(library=library_at_kisumu)
 print(librarian_at_kisumu.name)
