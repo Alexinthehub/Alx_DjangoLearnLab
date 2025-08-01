@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import user_passes_test
 # Helper functions to check for a specific role
 def is_admin(user):
     return user.is_authenticated and hasattr(user, 'bookshelf_profile') and user.bookshelf_profile.role == 'Admin'
-
 def is_librarian(user):
     return user.is_authenticated and hasattr(user, 'bookshelf_profile') and user.bookshelf_profile.role == 'Librarian'
 
