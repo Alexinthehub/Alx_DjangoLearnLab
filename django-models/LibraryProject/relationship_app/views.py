@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import DetailView
-from .models import Library, Book # <-- This is the corrected line
+from django.views.generic.detail import DetailView # <-- Corrected line
+from .models import Library, Book
 
 def list_books(request):
     books = Book.objects.all()

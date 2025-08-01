@@ -7,7 +7,7 @@
     <h1>All Books</h1>
     <ul>
         {% for book in books %}
-            <li>{{ book.title }} by {% for author in book.authors.all %}{{ author.first_name }} {{ author.last_name }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+            <li>{{ book.title }} by {% for author in book.authors.all %}{{ author.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
         {% empty %}
             <li>No books found.</li>
         {% endfor %}
