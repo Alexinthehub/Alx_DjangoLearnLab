@@ -1,9 +1,6 @@
-import sys
-sys.path.append('.')
-
 import os
 import django
-from LibraryProject.relationship_app.models import Library, Book, Author, Librarian, UserProfile
+from relationship_app.models import Library, Book, Author, Librarian, UserProfile
 
 # Setup Django environment
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'LibraryProject.settings')
@@ -34,17 +31,14 @@ def retrieve_librarian_for_library(library_id):
     Retrieves the librarian for a specific library.
     """
     try:
-        library = Library.objects.get(id=library_id)
-        librarian_profile = UserProfile.objects.get(library=library)
+        librarian_profile = UserProfile.objects.get(
+            role=UserProfile.LIBRARIAN,
+            library__id=library_id
+        )
         return librarian_profile.user
-    except (Library.DoesNotExist, UserProfile.DoesNotExist):
+    except UserProfile.DoesNotExist:
         return None
 
 # The checker will likely run these functions with sample data
 if __name__ == '__main__':
-    # You would use these functions with real data to test
-    # For example:
-    # books = list_all_books_in_a_library(library_id=1)
-    # author_books = query_books_by_author(author_id=1)
-    # librarian = retrieve_librarian_for_library(library_id=1)
     pass
