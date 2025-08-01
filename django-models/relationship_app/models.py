@@ -17,9 +17,9 @@ class Book(models.Model):
         return self.title
 
 class UserProfile(models.Model):
-    # Fixed the related_name to avoid a clash with the bookshelf app
+    # The corrected related_name to resolve the conflict
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='relationship_profile')
-    
+
     ADMIN = 'Admin'
     LIBRARIAN = 'Librarian'
     MEMBER = 'Member'
@@ -34,10 +34,8 @@ class UserProfile(models.Model):
     def __str__(self):
         return f"{self.user.username}'s Profile ({self.role})"
 
-# This combined signal now creates and updates the user profile correctly
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
-    # The new related_name is used to access the user profile instance
     instance.relationship_profile.save()
