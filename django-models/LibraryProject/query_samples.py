@@ -1,6 +1,6 @@
 import os
 import django
-from relationship_app.models import Library, Book, Author, Librarian, UserProfile
+from relationship_app.models import Library, Book, UserProfile
 
 # Setup Django environment
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'LibraryProject.settings')
@@ -20,11 +20,10 @@ def query_books_by_author(author_id):
     """
     Queries all books by a specific author.
     """
-    try:
-        author = Author.objects.get(id=author_id)
-        return Book.objects.filter(author=author)
-    except Author.DoesNotExist:
-        return None
+    # This query assumes an 'Author' model exists
+    # The provided models do not have an Author model directly
+    # This function may need to be adjusted based on your final models
+    return Book.objects.filter(author_id=author_id)
 
 def retrieve_librarian_for_library(library_id):
     """
@@ -39,6 +38,5 @@ def retrieve_librarian_for_library(library_id):
     except UserProfile.DoesNotExist:
         return None
 
-# The checker will likely run these functions with sample data
 if __name__ == '__main__':
     pass
