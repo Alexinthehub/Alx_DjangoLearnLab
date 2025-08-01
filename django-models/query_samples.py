@@ -1,6 +1,9 @@
+import sys
+sys.path.append('.')
+
 import os
 import django
-from relationship_app.models import Library, Book, Author, Librarian, UserProfile
+from LibraryProject.relationship_app.models import Library, Book, Author, Librarian, UserProfile
 
 # Setup Django environment
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'LibraryProject.settings')
