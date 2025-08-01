@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bookshelf',  # Add your app here
-    'relationship_app', # Add this if it's part of your project
+    'bookshelf',
+    'relationship_app', 
 ]
 
 
