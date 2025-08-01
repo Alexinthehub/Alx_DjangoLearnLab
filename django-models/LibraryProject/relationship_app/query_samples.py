@@ -27,12 +27,14 @@ librarian2 = Librarian.objects.create(name="Peter Otieno", library=library2)
 # --- Task Queries ---
 
 # 1. Query all books by a specific author.
-ngugi_books = Book.objects.filter(author__name="Ngugi wa Thiong'o")
-for book in ngugi_books:
+author_name = "Ngugi wa Thiong'o"
+author = Author.objects.get(name=author_name)
+books_by_author = Book.objects.filter(author=author)
+for book in books_by_author:
     print(book.title)
 
 # 2. List all books in a library.
-library_name = "Nairobi Central Library"  # This is the new line to match the checker
+library_name = "Nairobi Central Library"
 nairobi_library = Library.objects.get(name=library_name)
 books_in_nairobi = nairobi_library.books.all()
 for book in books_in_nairobi:
