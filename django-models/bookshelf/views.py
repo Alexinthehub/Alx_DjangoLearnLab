@@ -1,24 +1,22 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import user_passes_test
-from .models import UserProfile
+from django.http import HttpResponse
+from .decorators import role_required
 
-def is_admin(user):
-    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
+# An example home view that doesn't require a specific role
+def home(request):
+    return render(request, 'bookshelf/home.html')
 
-def is_librarian(user):
-    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
-
-def is_member(user):
-    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
-
-@user_passes_test(is_admin)
+# This view is only accessible to users with the 'Admin' role
+@role_required('Admin')
 def admin_view(request):
-    return render(request, 'bookshelf/admin_view.html', {'role': 'Admin'})
+    return HttpResponse("Welcome to the Admin page!")
 
-@user_passes_test(is_librarian)
+# This view is only accessible to users with the 'Librarian' role
+@role_required('Librarian')
 def librarian_view(request):
-    return render(request, 'bookshelf/librarian_view.html', {'role': 'Librarian'})
+    return HttpResponse("Welcome to the Librarian page!")
 
-@user_passes_test(is_member)
+# This view is only accessible to users with the 'Member' role
+@role_required('Member')
 def member_view(request):
-    return render(request, 'bookshelf/member_view.html', {'role': 'Member'})
+    return HttpResponse("Welcome to the Member page!")
