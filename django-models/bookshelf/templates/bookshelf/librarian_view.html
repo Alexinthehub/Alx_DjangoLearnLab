@@ -24,7 +24,8 @@
 </head>
 <body>
     <div class="card">
-        <h1>Welcome, Librarian {{ user.username }}!</h1>
+        <h1>Welcome, [Role] {{ request.user.username }}</h1>
+
         <p>This is your dashboard.</p>
 
         <ul>

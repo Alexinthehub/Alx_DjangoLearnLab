@@ -15,18 +15,18 @@ def is_member(user):
 
 # Views for each role
 @login_required
-@user_passes_test(is_admin)
+@user_passes_test(lambda u: u.userprofile.role == 'Admin')
 def admin_view(request):
     return render(request, 'bookshelf/admin_view.html')
 
 
-@user_passes_test(is_librarian)
 @login_required
+@user_passes_test(lambda u: u.userprofile.role == 'Librarian')
 def librarian_view(request):
-    return render(request, 'bookshelf/librarian_view.html')  
+    return render(request, 'bookshelf/librarian_view.html')
 
 
 @login_required
-@user_passes_test(is_member)
+@user_passes_test(lambda u: u.userprofile.role == 'Member')
 def member_view(request):
     return render(request, 'bookshelf/member_view.html')
