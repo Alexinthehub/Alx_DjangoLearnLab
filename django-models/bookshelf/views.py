@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .decorators import role_required
 
+# The home view does not require a specific role
 def home(request):
     return render(request, 'bookshelf/home.html')
 
