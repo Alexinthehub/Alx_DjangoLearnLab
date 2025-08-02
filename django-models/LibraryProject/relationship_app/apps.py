@@ -2,4 +2,7 @@ from django.apps import AppConfig
 
 class RelationshipAppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'LibraryProject.relationship_app'  # <-- must match INSTALLED_APPS
+    name = 'relationship_app'  # ✅ use actual app name
+
+    def ready(self):
+        import relationship_app.signals  # ✅ use actual app name

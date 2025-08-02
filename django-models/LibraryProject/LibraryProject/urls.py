@@ -19,5 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('bookshelf.urls')),
+    path('roles/', include('bookshelf.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),  # for login/logout
 ]
