@@ -1,8 +1,9 @@
 from django.apps import AppConfig
 
 class RelationshipAppConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'relationship_app'  # ✅ use actual app name
+    name = 'relationship_app'
 
     def ready(self):
-        import relationship_app.signals  # ✅ use actual app name
+        # The signal was likely imported here. Let's ensure it's commented out or removed.
+        # from . import signals 
+        pass # We don't want any signals running from this app

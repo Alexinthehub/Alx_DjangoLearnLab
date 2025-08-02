@@ -12,25 +12,15 @@ class Command(BaseCommand):
         email = os.getenv('DJANGO_SUPERUSER_EMAIL', 'admin@example.com')
         password = os.getenv('DJANGO_SUPERUSER_PASSWORD', 'adminpass')
 
-        if User.objects.filter(username=username).exists():
-            self.stdout.write(self.style.SUCCESS('Admin user already exists. Skipping creation.'))
-            return
-
-        self.stdout.write(f'Creating superuser "{username}"...')
-
-        user = User.objects.create_superuser(
+        user, created = User.objects.get_or_create(
             username=username,
-            email=email,
-            password=password
-        )
-
-        # Use get_or_create to safely create or retrieve the UserProfile
-        user_profile, created = UserProfile.objects.get_or_create(
-            user=user,
-            defaults={'role': 'Admin'}
+            defaults={'email': email, 'is_staff': True, 'is_superuser': True}
         )
 
         if created:
+            user.set_password(password)
+            user.save()
+            UserProfile.objects.create(user=user, role='Admin')
             self.stdout.write(self.style.SUCCESS('Successfully created admin user and profile!'))
         else:
-            self.stdout.write(self.style.SUCCESS('Successfully retrieved existing admin user and profile!'))
+            self.stdout.write(self.style.SUCCESS('Admin user already exists. Skipping creation.'))

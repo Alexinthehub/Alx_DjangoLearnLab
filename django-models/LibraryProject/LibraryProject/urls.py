@@ -1,9 +1,10 @@
-# File: LibraryProject/urls.py
-
 from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('bookshelf.urls')),  # Include the URLs from your bookshelf app
+    # The 'bookshelf' app is where we are working
+    path('', include('bookshelf.urls')), 
+    # Remove the problematic include for the relationship_app
+    # path('', include('LibraryProject.relationship_app.urls')),
 ]
