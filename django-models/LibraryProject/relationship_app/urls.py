@@ -6,12 +6,12 @@ from .views import (
     list_books,
     LibraryDetailView,
     register,
-    admin_view,     # Add this
-    librarian_view, # Add this
-    member_view,    # Add this
-    add_book,       # Add this
-    edit_book,    # Add this
-    delete_book  
+    admin_view,     
+    librarian_view, 
+    member_view,
+    add_book,
+    edit_book,
+    delete_book   
 )
 
 urlpatterns = [
@@ -28,7 +28,7 @@ urlpatterns = [
     path('member-dashboard/', member_view, name='member_dashboard'),
 
         # Paths for custom permission views
-    path('books/add/<int:pk>/', add_book, name='add_book'),
+    path('add_book/', add_book, name='add_book'),
     path('edit_book/<int:pk>/', edit_book, name='edit_book'),
-    path('books/delete/<int:pk>/', delete_book, name='delete_book'),
+    path('delete_book/<int:pk>/', delete_book, name='delete_book'),
 ]
