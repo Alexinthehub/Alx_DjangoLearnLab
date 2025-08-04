@@ -1,4 +1,8 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 # Author Model
 class Author(models.Model):
@@ -30,3 +34,34 @@ class Librarian(models.Model):
 
     def __str__(self):
         return self.name
+    
+    # Define the choices for the user roles
+class UserRole(models.TextChoices):
+    ADMIN = 'Admin'
+    LIBRARIAN = 'Librarian'
+    MEMBER = 'Member'
+
+# Create the UserProfile model with a OneToOneField relationship
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='userprofile')
+    role = models.CharField(
+        max_length=20,
+        choices=UserRole.choices,
+        default=UserRole.MEMBER
+    )
+
+    def __str__(self):
+        return f"{self.user.username}'s profile"
+
+# Use a signal to automatically create a UserProfile
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    try:
+        instance.userprofile.save()
+    except UserProfile.DoesNotExist:
+        UserProfile.objects.create(user=instance)
