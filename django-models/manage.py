@@ -3,9 +3,13 @@
 import os
 import sys
 
-
 def main():
     """Run administrative tasks."""
+    # This line is crucial for your nested project structure
+    # It adds the parent directory of settings.py to the path
+    # so Django can find the 'relationship_app' and other modules.
+    sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'LibraryProject'))
+
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'LibraryProject.settings')
     try:
         from django.core.management import execute_from_command_line
