@@ -10,7 +10,7 @@ from .views import (
     librarian_view, # Add this
     member_view,    # Add this
     add_book,       # Add this
-    change_book,    # Add this
+    edit_book,    # Add this
     delete_book  
 )
 
@@ -29,6 +29,6 @@ urlpatterns = [
 
         # Paths for custom permission views
     path('books/add/', add_book, name='add_book'),
-    path('books/change/<int:pk>/', change_book, name='change_book'),
+    path('edit_book/<int:pk>/', edit_book, name='edit_book'),
     path('books/delete/<int:pk>/', delete_book, name='delete_book'),
 ]
