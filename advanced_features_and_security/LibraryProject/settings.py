@@ -1,3 +1,14 @@
+# In LibraryProject/settings.py
+
+"""
+Project security settings.
+- `CSRF_COOKIE_SECURE` and `SESSION_COOKIE_SECURE`: Enforce secure cookie transmission over HTTPS.
+- `SECURE_BROWSER_XSS_FILTER`: Activates browser-side XSS protection.
+- `X_FRAME_OPTIONS`: Prevents clickjacking by disallowing embedding in iframes.
+- `SECURE_CONTENT_TYPE_NOSNIFF`: Prevents browsers from "sniffing" content types away from the declared Content-Type.
+- `CSP_DEFAULT_SRC`: Implements a Content Security Policy to mitigate XSS attacks.
+"""
+
 """
 Django settings for LibraryProject project.
 
@@ -22,7 +33,7 @@ BASE_DIR = Path(__file__).resolve().parent
 SECRET_KEY = 'django-insecure-^-!aoh-4x0eh_3(hh5+oo^k=mi)!n5-m&@eo7)zpu&v4j531!l'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -43,6 +54,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'csp.middleware.CspMiddleware', # Add this line
+    'django.middleware.security.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -139,3 +152,20 @@ LOGOUT_REDIRECT_URL = 'login'       # Redirect to this URL name after logout
 # In LibraryProject/settings.py
 # In LibraryProject/settings.py
 AUTH_USER_MODEL = 'bookshelf.CustomUser'
+
+# --- Security Settings ---
+# WARNING: Keep DEBUG = True during development. Change to False only in production.
+# We will keep it True for now to avoid errors while we work.
+# DEBUG = False
+
+# Cookie settings for HTTPS
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# Security headers to protect against XSS and clickjacking
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Content Security Policy to prevent XSS attacks
+CSP_DEFAULT_SRC = ("'self'",)

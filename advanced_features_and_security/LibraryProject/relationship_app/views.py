@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import permission_required
 from .models import Book
 from django.forms import ModelForm
 
+
+# All data access is performed using Django's ORM, which automatically
+# escapes user input and prevents SQL injection attacks.
 class BookForm(ModelForm):
     class Meta:
         model = Book
