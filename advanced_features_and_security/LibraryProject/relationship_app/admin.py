@@ -1,10 +1,11 @@
 # In advanced_features_and_security/LibraryProject/relationship_app/admin.py
 
+# In LibraryProject/relationship_app/admin.py
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Book, Author, Library, CustomUser
-
-
+from .models import Book, Author, Library
+from bookshelf.models import CustomUser 
+# ... (rest of the file is the same) ...
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     model = CustomUser

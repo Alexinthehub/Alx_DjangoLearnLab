@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     'LibraryProject.bookshelf', 
+     'bookshelf', 
       'relationship_app', 
 ]
 
@@ -136,4 +136,6 @@ LOGOUT_REDIRECT_URL = 'login'       # Redirect to this URL name after logout
 
 # In advanced_features_and_security/LibraryProject/settings.py
 
-AUTH_USER_MODEL = 'relationship_app.CustomUser'
+# In LibraryProject/settings.py
+# In LibraryProject/settings.py
+AUTH_USER_MODEL = 'bookshelf.CustomUser'
