@@ -1,0 +1,20 @@
+# Web Server Configuration for HTTPS
+
+To serve the Django application over HTTPS, a web server (such as Nginx or Apache) must be configured with an SSL/TLS certificate.
+
+## Nginx Example Configuration
+
+server {
+    listen 443 ssl;
+    server_name your_domain.com www.your_domain.com;
+
+    ssl_certificate /path/to/your/certificate.pem;
+    ssl_certificate_key /path/to/your/private.key;
+
+    # HSTS Header
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
+
+    location / {
+        # Proxy pass to Django application
+    }
+}

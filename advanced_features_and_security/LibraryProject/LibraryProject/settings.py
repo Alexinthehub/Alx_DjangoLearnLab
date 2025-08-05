@@ -1,4 +1,13 @@
 # In LibraryProject/settings.py
+# In LibraryProject/settings.py
+
+"""
+Project security settings for HTTPS and HSTS.
+- SECURE_SSL_REDIRECT: Redirects all HTTP requests to HTTPS.
+- SECURE_HSTS_SECONDS: Enables HSTS and sets the max-age for the policy.
+- SECURE_HSTS_INCLUDE_SUBDOMAINS: Applies HSTS policy to all subdomains.
+- SECURE_HSTS_PRELOAD: Allows the site to be included in the browser's HSTS preload list.
+"""
 
 """
 Project security settings.
@@ -169,3 +178,19 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # Content Security Policy to prevent XSS attacks
 CSP_DEFAULT_SRC = ("'self'",)
+
+# In LibraryProject/settings.py
+
+# --- HTTPS and HSTS Configuration ---
+# Redirect all non-HTTPS requests to HTTPS
+SECURE_SSL_REDIRECT = True
+
+# HTTP Strict Transport Security (HSTS) settings
+# This tells the browser to only use HTTPS for a period (e.g., 1 year)
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Note: SESSION_COOKIE_SECURE and CSRF_COOKIE_SECURE should already be True from the previous task.
+# X_FRAME_OPTIONS, SECURE_CONTENT_TYPE_NOSNIFF, and SECURE_BROWSER_XSS_FILTER
+# should also be set.
