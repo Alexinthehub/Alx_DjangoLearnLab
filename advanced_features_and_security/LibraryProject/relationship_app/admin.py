@@ -1,24 +1,9 @@
-# In advanced_features_and_security/LibraryProject/relationship_app/admin.py
-
 # In LibraryProject/relationship_app/admin.py
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 from .models import Book, Author, Library
-from bookshelf.models import CustomUser 
-# ... (rest of the file is the same) ...
-@admin.register(CustomUser)
-class CustomUserAdmin(UserAdmin):
-    model = CustomUser
-    fieldsets = UserAdmin.fieldsets + (
-        ('Additional Info', {'fields': ('date_of_birth', 'profile_photo')}),
-    )
-    add_fieldsets = UserAdmin.add_fieldsets + (
-        ('Additional Info', {'fields': ('date_of_birth', 'profile_photo')}),
-    )
 
-
-# We will remove the UserProfile model admin since we are replacing it
-# with the CustomUser model.
+# We removed the CustomUser model from this app,
+# so we also remove its admin registration.
 
 admin.site.register(Author)
 admin.site.register(Book)
