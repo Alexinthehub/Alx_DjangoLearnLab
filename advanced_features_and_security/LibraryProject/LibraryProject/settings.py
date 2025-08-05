@@ -18,6 +18,9 @@ Project security settings.
 - `CSP_DEFAULT_SRC`: Implements a Content Security Policy to mitigate XSS attacks.
 """
 
+# Required when running behind a proxy that handles SSL termination
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 """
 Django settings for LibraryProject project.
 
