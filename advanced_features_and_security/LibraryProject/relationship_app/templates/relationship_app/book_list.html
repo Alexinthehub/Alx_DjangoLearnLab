@@ -1,15 +1,15 @@
 <h1>Book List</h1>
-{% if user.is_authenticated and perms.relationship_app.can_create %}
+{% if user.is_authenticated and perms.bookshelf.can_create %}
     <a href="{% url 'relationship_app:book_create' %}">Add New Book</a>
 {% endif %}
 <ul>
     {% for book in books %}
         <li>
             {{ book.title }} - {{ book.author.name }}
-            {% if user.is_authenticated and perms.relationship_app.can_edit %}
+            {% if user.is_authenticated and perms.bookshelf.can_edit %}
                 | <a href="{% url 'relationship_app:book_update' book.pk %}">Edit</a>
             {% endif %}
-            {% if user.is_authenticated and perms.relationship_app.can_delete %}
+            {% if user.is_authenticated and perms.bookshelf.can_delete %}
                 | <a href="{% url 'relationship_app:book_delete' book.pk %}">Delete</a>
             {% endif %}
         </li>

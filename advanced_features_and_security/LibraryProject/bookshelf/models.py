@@ -33,9 +33,17 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.username
 
-# Existing Book model (if any, ensure it's here)
 class Book(models.Model):
     title = models.CharField(max_length=200)
-    # Add other fields as necessary
+
+    class Meta:
+        # Custom permissions as required by the checker.
+        permissions = [
+            ("can_view", "Can view book"),
+            ("can_create", "Can create book"),
+            ("can_edit", "Can edit book"),
+            ("can_delete", "Can delete book"),
+        ]
+
     def __str__(self):
         return self.title

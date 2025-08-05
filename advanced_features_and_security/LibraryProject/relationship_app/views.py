@@ -10,12 +10,12 @@ class BookForm(ModelForm):
         model = Book
         fields = ['title', 'author', 'publication_date']
 
-@permission_required('relationship_app.can_view', raise_exception=True)
+@permission_required('bookshelf.can_view', raise_exception=True)
 def book_list(request):
     books = Book.objects.all()
     return render(request, 'relationship_app/book_list.html', {'books': books})
 
-@permission_required('relationship_app.can_create', raise_exception=True)
+@permission_required('bookshelf.can_create', raise_exception=True)
 def book_create(request):
     form = BookForm(request.POST or None)
     if form.is_valid():
@@ -23,7 +23,7 @@ def book_create(request):
         return redirect('relationship_app:book_list')
     return render(request, 'relationship_app/book_form.html', {'form': form, 'action': 'Create'})
 
-@permission_required('relationship_app.can_edit', raise_exception=True)
+@permission_required('bookshelf.can_edit', raise_exception=True)
 def book_update(request, pk):
     book = get_object_or_404(Book, pk=pk)
     form = BookForm(request.POST or None, instance=book)
@@ -32,7 +32,7 @@ def book_update(request, pk):
         return redirect('relationship_app:book_list')
     return render(request, 'relationship_app/book_form.html', {'form': form, 'action': 'Update'})
 
-@permission_required('relationship_app.can_delete', raise_exception=True)
+@permission_required('bookshelf.can_delete', raise_exception=True)
 def book_delete(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == 'POST':
