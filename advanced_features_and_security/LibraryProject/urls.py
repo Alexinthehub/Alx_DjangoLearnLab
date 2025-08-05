@@ -14,11 +14,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-# In django-models/django-models/urls.py
+# In advanced_features_and_security/LibraryProject/urls.py
+
 from django.contrib import admin
-from django.urls import path, include  # Add 'include' here
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('relationship/', include('relationship_app.urls')), # Add this line
+    path('relationship/', include('relationship_app.urls')),
+    path('bookshelf/', include('LibraryProject.bookshelf.urls')),  # Corrected path for the bookshelf app
 ]
