@@ -1,9 +1,8 @@
 # In LibraryProject/bookshelf/urls.py
 
 from django.urls import path
-
-app_name = 'bookshelf'
+from . import views
 
 urlpatterns = [
-    # You can add URLs for the bookshelf app here later
+    path('books/', views.book_list, name='book_list'),
 ]
