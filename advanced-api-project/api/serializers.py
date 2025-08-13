@@ -1,15 +1,12 @@
-# api/serializers.py
-
 from rest_framework import serializers
 from .models import Author, Book
 from datetime import date
 
-# This serializer handles the Book model.
-# It also includes custom validation for the publication year.
+# This serializer handles the Book model, including validation.
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
-        fields = ['id', 'title', 'publication_year']
+        fields = ['id', 'title', 'publication_year', 'author']
 
     def validate_publication_year(self, value):
         """
