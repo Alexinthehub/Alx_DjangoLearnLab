@@ -19,7 +19,8 @@ class BookListView(generics.ListAPIView):
     # Define fields for ordering
     ordering_fields = ['title', 'publication_year']
     # Explicitly declare the filter backends to satisfy the check
-    filter_backends = [filters.OrderingFilter]
+    filter_backends = [filters.OrderingFilter , filters.SearchFilter
+                    ]
 
 # This view is a simple CreateView
 class BookCreateView(generics.CreateAPIView):
