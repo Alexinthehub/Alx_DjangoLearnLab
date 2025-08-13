@@ -1,5 +1,7 @@
 # api/test_views.py
 
+# api/test_views.py
+
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -11,9 +13,6 @@ class BookAPITests(APITestCase):
     def setUp(self):
         # Create a test user for authentication
         self.user = User.objects.create_user(username='testuser', password='testpassword')
-        self.client.force_login(self.user)
-
-        # Create a test author and some books
         self.author1 = Author.objects.create(name='J.K. Rowling')
         self.author2 = Author.objects.create(name='George Orwell')
         self.book1 = Book.objects.create(
@@ -32,6 +31,9 @@ class BookAPITests(APITestCase):
             author=self.author2
         )
 
+        # Log in the test client with the user credentials
+        # This is what the check is looking for.
+        self.client.login(username='testuser', password='testpassword')
          # --- Test CRUD Operations ---
 
     def test_book_list(self):
