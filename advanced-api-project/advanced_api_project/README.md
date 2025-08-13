@@ -36,3 +36,19 @@ The API provides the following endpoints for managing books.
 ### `/api/books/<int:pk>/delete/`
 
 - **Description**: A dedicated endpoint for deleting a specific book. Requires authentication.
+
+## Testing
+
+This project includes a suite of unit tests to ensure the API endpoints are functioning as expected. The tests cover:
+
+- **CRUD Operations**: Verifying that books can be created, retrieved, updated, and deleted successfully.
+- **Permissions**: Ensuring that only authenticated users can perform certain actions (POST, PUT, DELETE).
+- **Data Integrity**: Checking that the data returned by the API is correct and that the database is updated properly.
+
+### How to Run Tests
+
+To run the full test suite for the `api` app, use the following Django management command:
+
+```bash
+python manage.py test api
+```
