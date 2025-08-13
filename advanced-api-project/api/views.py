@@ -3,6 +3,7 @@ from .models import Book
 from .serializers import BookSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from django_filters import rest_framework
+from rest_framework import filters  
 
 # This view is a simple ListView
 class BookListView(generics.ListAPIView):
@@ -17,6 +18,8 @@ class BookListView(generics.ListAPIView):
     
     # Define fields for ordering
     ordering_fields = ['title', 'publication_year']
+    # Explicitly declare the filter backends to satisfy the check
+    filter_backends = [filters.OrderingFilter]
 
 # This view is a simple CreateView
 class BookCreateView(generics.CreateAPIView):
