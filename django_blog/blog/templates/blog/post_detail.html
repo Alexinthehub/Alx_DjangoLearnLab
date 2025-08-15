@@ -9,9 +9,39 @@
         </small>
         {% if user.is_authenticated and user.id == object.author.id %}
             <div>
-                <a href="{% url 'post_update' object.pk %}">Edit</a>
-                <a href="{% url 'post_delete' object.pk %}">Delete</a>
+                <a href="{% url 'post_update' object.pk %}">Edit Post</a>
+                <a href="{% url 'post_delete' object.pk %}">Delete Post</a>
             </div>
         {% endif %}
     </article>
+    
+    <hr>
+    <h3>Comments</h3>
+    {% if user.is_authenticated %}
+        <h4>Add a Comment</h4>
+        <form method="post" action="{% url 'add_comment_to_post' object.pk %}">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+    {% else %}
+        <p>You must be logged in to comment.</p>
+    {% endif %}
+
+    {% for comment in comments %}
+        <div>
+            <p>{{ comment.content }}</p>
+            <small>
+                Comment by {{ comment.author.username }} on {{ comment.created_at|date:"F d, Y" }}
+            </small>
+            {% if user.is_authenticated and user.id == comment.author.id %}
+                <div>
+                    <a href="{% url 'comment_update' comment.pk %}">Edit Comment</a>
+                    <a href="{% url 'comment_delete' comment.pk %}">Delete Comment</a>
+                </div>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>No comments yet.</p>
+    {% endfor %}
 {% endblock content %}
