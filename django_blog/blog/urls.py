@@ -9,7 +9,7 @@ from .views import (
     CommentDeleteView,
     CommentCreateView,
     search,
-    tagged_posts,
+    PostByTagListView
 
 )
 from django.contrib.auth import views as auth_views
@@ -33,5 +33,5 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
 
     path('search/', search, name='search'),
-    path('tags/<slug:tag_slug>/', tagged_posts, name='tagged_posts'),
+    path('tags/<slug:tag_slug>/', PostByTagListView.as_view(), name='tagged_posts'),
 ]
