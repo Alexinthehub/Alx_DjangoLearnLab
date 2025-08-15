@@ -6,6 +6,26 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment
 from .forms import PostForm, UserRegisterForm, CommentForm
+from django.db.models import Q # Add this import
+
+def search(request):
+    query = request.GET.get('q')
+    posts = Post.objects.all()
+
+    if query:
+        posts = posts.filter(
+            Q(title__icontains=query) | 
+            Q(content__icontains=query) | 
+            Q(tags__name__icontains=query)
+        ).distinct()
+    
+    return render(request, 'blog/search_results.html', {'posts': posts, 'query': query})
+
+
+def tagged_posts(request, tag_slug):
+    tag = get_object_or_404(tag_slug, slug=tag_slug)
+    posts = Post.objects.filter(tags__in=[tag])
+    return render(request, 'blog/tagged_posts.html', {'tag': tag, 'posts': posts})
 
 class PostListView(ListView):
     model = Post

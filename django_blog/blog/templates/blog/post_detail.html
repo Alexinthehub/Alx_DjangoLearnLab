@@ -1,10 +1,16 @@
-{% if user.is_authenticated %}
-    <h4>Add a Comment</h4>
-    <form method="post" action="{% url 'add_comment_to_post' object.pk %}">
-        {% csrf_token %}
-        {{ comment_form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
-{% else %}
-    <p>You must be logged in to comment.</p>
-{% endif %}
+
+{% block content %}
+    <article>
+        <h2>{{ object.title }}</h2>
+        <p>{{ object.content }}</p>
+        <small>
+            Published on {{ object.published_date|date:"F d, Y" }} by {{ object.author.username }}
+        </small>
+        {% if user.is_authenticated and user.id == object.author.id %}
+            <div>
+                <a href="{% url 'post_update' object.pk %}">Edit</a>
+                <a href="{% url 'post_delete' object.pk %}">Delete</a>
+            </div>
+        {% endif %}
+    </article>
+{% endblock content %}
