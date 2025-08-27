@@ -6,6 +6,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
+from .serializers import UserSerializer  # Add this import statement
 
 # Alias for the custom user model to match the checker's requirements
 CustomUser = get_user_model()
@@ -30,15 +31,23 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
         return self.request.user
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = CustomUser.objects.all()  # Using the aliased model
+    queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     @action(detail=True, methods=['post'])
     def follow(self, request, pk=None):
-        user_to_follow = get_object_or_404(CustomUser, pk=pk)
+        user_to_follow = get_object_or_404(User, pk=pk)
         current_user = request.user
         current_user.following.add(user_to_follow)
+
+        # Create a notification for the followed user
+        Notification.objects.create(
+            recipient=user_to_follow,
+            actor=current_user,
+            verb='followed',
+            target=user_to_follow # The target is the user who was followed
+        )
         return Response({'status': f'You are now following {user_to_follow.username}'}, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=['post'])
