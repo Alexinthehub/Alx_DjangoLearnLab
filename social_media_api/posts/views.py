@@ -7,6 +7,15 @@ from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
 from .permissions import IsAuthorOrReadOnly
 
+class UserFeedAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        followed_users = request.user.following.all()
+        feed_posts = Post.objects.filter(author__in=followed_users).order_by('-created_at')
+        serializer = PostSerializer(feed_posts, many=True)
+        return Response(serializer.data)
+
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('-created_at')
     serializer_class = PostSerializer
@@ -25,11 +34,5 @@ class CommentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
-class UserFeedAPIView(APIView):
-    permission_classes = [IsAuthenticated]
 
-    def get(self, request):
-        followed_users = request.user.following.all()
-        feed_posts = Post.objects.filter(author__in=followed_users).order_by('-created_at')
-        serializer = PostSerializer(feed_posts, many=True)
-        return Response(serializer.data)
+
