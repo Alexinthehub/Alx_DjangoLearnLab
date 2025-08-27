@@ -19,25 +19,22 @@ class PostViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def like(self, request, pk=None):
-        post = get_object_or_404(Post, pk=pk)
-        user = request.user
+        post = generics.get_object_or_404(Post, pk=pk) # Use generics.get_object_or_404
         
-        # Check if user already liked the post
-        if Like.objects.filter(user=user, post=post).exists():
+        # Use get_or_create to check for and create the like in one step
+        like, created = Like.objects.get_or_create(user=request.user, post=post)
+        
+        if created:
+            # Only create a notification if the like is new
+            Notification.objects.create(
+                recipient=post.author,
+                actor=request.user,
+                verb='liked',
+                target=post
+            )
+            return Response({'status': 'post liked'}, status=status.HTTP_201_CREATED)
+        else:
             return Response({'detail': 'You have already liked this post.'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        # Create the Like object
-        Like.objects.create(user=user, post=post)
-
-        # Create a notification for the post's author
-        Notification.objects.create(
-            recipient=post.author,
-            actor=user,
-            verb='liked',
-            target=post
-        )
-        return Response({'status': 'post liked'}, status=status.HTTP_201_CREATED)
-
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def unlike(self, request, pk=None):
         post = get_object_or_404(Post, pk=pk)
