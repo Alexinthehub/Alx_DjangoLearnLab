@@ -26,7 +26,11 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 class UserFeedAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
-    
+    def get(self, request):
+        following_users = request.user.following.all()
+        feed_posts = Post.objects.filter(author__in=following_users).order_by('-created_at')
+        serializer = PostSerializer(feed_posts, many=True)
+        return Response(serializer.data)
     def get(self, request):
         followed_users = request.user.following.all()
         feed_posts = Post.objects.filter(author__in=followed_users).order_by('-created_at')
