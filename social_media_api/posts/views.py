@@ -1,14 +1,20 @@
 # posts/views.py
-from rest_framework import viewsets, filters, permissions, status
+from rest_framework import viewsets, filters, permissions, status, generics, serializers 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.generics import get_object_or_404
 from rest_framework.decorators import action
-from django.shortcuts import get_object_or_404
-from .models import Post, Comment, Like # Import Like
-from .serializers import PostSerializer, CommentSerializer, LikeSerializer # Import LikeSerializer
+from .models import Post, Comment, Like 
+from .serializers import PostSerializer, CommentSerializer
 from .permissions import IsAuthorOrReadOnly
-from notifications.models import Notification # Import Notification
+from notifications.models import Notification
 from django.contrib.contenttypes.models import ContentType
+
+
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Like
+        fields = '__all__'
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('-created_at')
@@ -84,7 +90,3 @@ class UserFeedAPIView(APIView):
         serializer = PostSerializer(feed_posts, many=True)
         return Response(serializer.data)
     
-class LikeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Like
-        fields = '__all__'

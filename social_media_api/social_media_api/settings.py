@@ -159,7 +159,7 @@ REST_FRAMEWORK = {
 # settings.py
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/Mwendwa/social_media_api/static'
+STATIC_ROOT = '/home/Mwendwa/Alx_DjangoLearnLab/social_media_api/static'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/home/Mwendwa/social_media_api/media'
