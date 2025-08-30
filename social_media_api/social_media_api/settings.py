@@ -11,6 +11,19 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
+import os
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql', # Or 'mysql', depending on your choice
+        'NAME': 'your_database_name',
+        'USER': 'your_username',
+        'PASSWORD': 'your_password',
+        'HOST': 'your_database_host',
+        'PORT': '5432', # Or 3306 for MySQL
+    }
+}
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,9 +36,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-8o0mo!upc)^$8o1tlrq(@!ix#o^y3qo(=1jjnarmht%%_vzfs6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+# settings.py
+
+ALLOWED_HOSTS = ['Mwendwa.pythonanywhere.com']
 
 
 # Application definition
@@ -137,3 +152,14 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
 }
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.0/howto/static-files/
+
+# settings.py
+
+STATIC_URL = '/static/'
+STATIC_ROOT = '/home/Mwendwa/social_media_api/static'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = '/home/Mwendwa/social_media_api/media'
