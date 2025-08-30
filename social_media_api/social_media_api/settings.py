@@ -14,14 +14,16 @@ from pathlib import Path
 import dj_database_url
 import os
 
+# settings.py
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql', # Or 'mysql', depending on your choice
-        'NAME': 'your_database_name',
-        'USER': 'your_username',
-        'PASSWORD': 'your_password',
-        'HOST': 'your_database_host',
-        'PORT': '5432', # Or 3306 for MySQL
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Mwendwa$Database1', # Get this from the database tab
+        'USER': 'Mwendwa',
+        'PASSWORD': 'code1234', # Get this from the database tab
+        'HOST': 'Mwendwa.mysql.pythonanywhere-services.com',
+        'PORT': '3306', # MySQL's default port
     }
 }
 
