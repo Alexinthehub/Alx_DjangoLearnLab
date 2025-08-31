@@ -23,6 +23,7 @@ DATABASES = {
         'USER': 'Mwendwa',
         'PASSWORD': 'code1234', # Get this from the database tab
         'HOST': 'Mwendwa.mysql.pythonanywhere-services.com',
+        'PORT': '3306',
     }
 }
 
