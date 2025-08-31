@@ -7,6 +7,7 @@ from rest_framework.authtoken.models import Token
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 from .serializers import UserSerializer  # Add this import statement
+from notifications.models import Notification  # Import the Notification model
 
 # Alias for the custom user model to match the checker's requirements
 CustomUser = get_user_model()

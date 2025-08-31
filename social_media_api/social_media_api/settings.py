@@ -23,7 +23,6 @@ DATABASES = {
         'USER': 'Mwendwa',
         'PASSWORD': 'code1234', # Get this from the database tab
         'HOST': 'Mwendwa.mysql.pythonanywhere-services.com',
-        'PORT': '3306', # MySQL's default port
     }
 }
 
@@ -166,3 +165,16 @@ STATIC_ROOT = '/home/Mwendwa/Alx_DjangoLearnLab/social_media_api/static'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/home/Mwendwa/social_media_api/media'
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Protects against clickjacking by ensuring your site is not loaded in a frame.
+# 'DENY' is the recommended setting.
+X_FRAME_OPTIONS = 'DENY'
+
+# Automatically redirects non-HTTPS requests to HTTPS.
+# This is a critical security measure for production environments.
+SECURE_SSL_REDIRECT = True
+
+# Protects against XSS attacks by enabling the browser's XSS filter.
+SECURE_BROWSER_XSS_FILTER = True
